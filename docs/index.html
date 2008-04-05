@@ -1,0 +1,185 @@
+<html
+    <head>
+        <title>rFormUnit </title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link href="../../stylesheets/zhimin.css" media="screen" rel="Stylesheet" type="text/css" /> 
+        <link href="../../stylesheets/local.css" media="screen" rel="Stylesheet" type="text/css" /> 
+
+<style type="text/css" media="screen">
+BODY
+{
+    BACKGROUND-COLOR: #fffff0;
+    COLOR: #000000;
+    FONT-FAMILY: "Times New Roman", Times, serif
+}
+
+.green {
+  background-color: #ECF3E1;
+  border:1px solid #C5DEA1;
+}
+
+.orange{
+  border:1px solid #E8A400;
+  background-color: #FFF4D8;
+
+</style>
+
+</head>
+  <body>
+ 
+	<h3>What is rFormUnit?</h3>
+	<p>rFormUnit is a simple framework for automated testing <b>Windows Form</b> applications. It wraps <a href="http://www.autoitscript.com/autoit3/">AutoItX</a> COM API to provide an alternative way to write an easy to use, readable automated functional tests.
+	</p>
+
+	<p>Current release: 0.1.1<br/>
+	&nbsp; <a href="releases/rformunit-0.1.1-mswin32.gem">rformunit-0.1.1-mswin32.gem</a> or  from <a href="http://rubyforge.org/projects/rformunit/">rubyforge.org</a>,
+	
+  <!-- &nbsp; <a href="releases/changelog.txt">Change logs</a> <br/> -->
+	&nbsp; Documentation: <a href="rdoc/index.html">RDoc</a>, and Quick start guide below.
+	</p> 	
+
+	<h3>Installation</h3>
+  
+  <p><b>Dependecies</b><br/>
+  &nbsp; &nbsp; Install <a href="http://rubyinstaller.rubyforge.org/wiki/wiki.pl">Ruby for windows</a><br/>
+  &nbsp; &nbsp; Install <a href="http://www.autoitscript.com/autoit3/">AutoIt3</a></p>
+  
+	<p>Using RubyGems: 
+		<pre class="green">$ gem install rformunit</pre>
+      or download and install locally:
+     <pre class="green">$ gem install rformunit-0.1.0-mswin32.gem</pre>
+    </p>
+		
+	<h3>Quick start guide through examples</h3>
+	<ul>
+     <li><a href="#script">Run as automation scripts</a></li>
+     <li><a href="#test">Run as xUnit test cases</a></li>
+     <li><a href="#rspec">Run as RSpecs</a></li>
+  </ul>
+  <p>Check sample/*.rb for more examples.</p>	
+	<a name="script"></a><h4>Run as automation scripts</h4>
+	<table width="100%" cellspacing="0" cellpadding="0">
+            <tr bgcolor="#33CC33">
+                <th align="left" width="50%">AutoIt3 Script</th>
+                <th align="left" width="50%">rFormUnit Script</th>
+            </tr>
+            <tr>
+                <td valign="top" nowrap="nowrap" class="orange" width="50%">                    
+                        <pre>
+                        
+                        
+                        
+Run("notepad.exe")
+WinWaitActive("Untitled - Notepad")
+
+Send("Hello from Notepad.{ENTER}1 2 3{ENTER}")
+Sleep(500)
+Send("+{UP 2}")
+Sleep(500)
+
+Send("!f")
+Send("x")
+
+WinWaitActive("Notepad", "No")
+Send("n")
+
+                        </pre>
+                </td>
+
+                <td valign="top" nowrap="nowrap"  class="green">
+<pre>require 'rformunit'
+
+include RFormUnit::Driver
+
+RFormUnit::Process.run("NOTEPAD.EXE")
+notepad_win = RFormUnit::Window.new('Untitled - Notepad')
+RFormUnit::Keyboard.type("Hello from Notepad, {ENTER}1 2 3 4 5 6 7 8 9 10{ENTER}")
+sleep(0.5) 
+RFormUnit::Keyboard.press("+{UP 2}")
+sleep(0.5)
+notepad_win.close
+
+notepad_confirm_dialog = RFormUnit::Window.new('Notepad', 'No')
+notepad_confirm_dialog.click_button('&No')</pre>
+                </td>
+            </tr>
+        </table>
+
+        <a name="test"></a>
+        <div id="rformunit_test">
+        <h4>rFormUnit Testcase</h4>                        
+<pre class="green">require 'rformunit'
+
+class CalcTest &lt; RFormUnit::FormTestCase
+   def setup
+      RFormUnit::Process.run("calc.exe")
+      @calc_win = RFormUnit::Window.new('Calculator')
+   end
+
+   def teardown
+      @calc_win.close
+   end
+
+   def test_multiple
+      @calc_win.click_button('127')  #3
+      @calc_win.click_button('91')   #*
+      @calc_win.click_button('131')  #7
+      @calc_win.click_button('112')  #=
+      assert_equal "21. ", @calc_win.get_control_text('403')
+   end
+
+end</pre>
+        </div>
+        
+        <a name="rspec"></a><div id='rformunit_rspec'>
+           <h4>rFormUnit <a href="http://rspec.rubyforge.org/">RSpec</a></h4>
+          
+            <p><b>rspec_calc</b>: a spec runner to run rformunit based rspecs</p>
+          <pre class="green">
+require File.dirname(__FILE__) + '/calc'
+
+class RSpecCalc
+   include Calc
+    
+   def setup
+      init # initialize 
+      @calc_win = find_existing_calc_win
+      if @calc_win.nil?
+         @calc_win = start_calc
+      end
+   end
+end
+
+module Spec
+   module Runner
+      class Context
+         def before_context_eval
+            inherit RSpecCalc
+         end
+      end
+   end
+end</pre>
+          
+          <p><b>calc_spec</b>: a rspec</p>
+          <pre class="green">
+require File.dirname(__FILE__) + '/rspec_calc'
+
+context "Calculator" do
+
+   setup do    
+   end
+
+  specify "Multiple shall work" do
+      @calc_win.click_button('127')  #3
+      @calc_win.click_button('91')   #*
+      @calc_win.click_button('131')  #7
+      @calc_win.click_button('112')  #=
+      @calc_win.get_control_text('403').should == '21. '
+   end
+
+end</pre>
+          
+         </div>
+         
+    </body>
+</html>

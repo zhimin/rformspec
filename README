@@ -1,0 +1,30 @@
+rFormUnit
+=========
+
+rFormUnit is a simple framework for automated testing Windows Form applications.
+It wraps AutoItX COM API to provide an alternative way to write an easy to use,
+readable automated functional tests.
+
+Dependencies
+------------
+* Ruby -   http://rubyinstaller.rubyforge.org/wiki/wiki.pl (Version verified: ruby185-21.exe)
+* AutoIt3 - http://www.autoitscript.com/autoit3/  (Version verified  v3.2.2.0)
+
+Platform: MS Windows (of course)
+
+Install
+-------
+> gem install rformunit
+
+One minute tutorial
+-------------------
+
+
+
+Copyrights
+----------
+Free to use for any purposes. The software provided AS IS without any warranty whatsoever.
+
+Contact
+-------
+Zhimin Zhan, Agileway Pty Ltd.
