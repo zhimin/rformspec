@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+
+== 0.3 (2009-10-27)
+
+Renamed to RFormSpec
+
 == 0.2.0 (2007-12-18)
 - add convenient methods in Driver
 - add a commonly used dialog class: open file dialog, save as file dialog

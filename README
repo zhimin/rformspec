@@ -1,7 +1,7 @@
-rFormUnit
+RFormSpec
 =========
 
-rFormUnit is a simple framework for automated testing Windows Form applications.
+RFormSpec is a simple framework for automated testing Windows Form applications.
 It wraps AutoItX COM API to provide an alternative way to write an easy to use,
 readable automated functional tests.
 
@@ -12,13 +12,7 @@ Dependencies
 
 Platform: MS Windows (of course)
 
-Install
--------
-> gem install rformunit
-
-One minute tutorial
--------------------
-
+Quick Start: Download iTest2 IDE, open samples\form_calculator.tpr project, run it.
 
 
 Copyrights
