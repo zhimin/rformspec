@@ -1,30 +1,30 @@
 CHANGELOG
 =========
 == 0.2.0 (2007-12-18)
- - add convenient methods in Driver
- - add a commonly used dialog class: open file dialog, save as file dialog 
- - add filtered key to support 'Alt+', 'Ctrl+'
- 
+- add convenient methods in Driver
+- add a commonly used dialog class: open file dialog, save as file dialog
+- add filtered key to support 'Alt+', 'Ctrl+'
+
 == 0.1.3 (2007-04-18)
 
 New features:
-  - Support window with various titles depends on invoking conditions
-  
+- Support window with various titles depends on invoking conditions
+
 == 0.1.2 (2007-02-26)
 
 New features:
-  - Add ListView support
-  - Add Label support
+- Add ListView support
+- Add Label support
 
 Others:
-  - code reformating
+- code reformating
 
 == 0.1.1 (2006-11-29)
 
 New features:
-  - replace keyboard.* with RFormUnit::Keyboard.*
-  - replace mouse.* with RFormUnit::Mouse.*
-  - replace process.* with RFormUnit::Process.*
+- replace keyboard.* with RFormUnit::Keyboard.*
+- replace mouse.* with RFormUnit::Mouse.*
+- replace process.* with RFormUnit::Process.*
 
 
 == 0.1.0 (2006-11-28) initial release

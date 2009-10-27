@@ -1,19 +1,19 @@
-require 'rformunit'
+require 'rformspec'
 
-include RFormUnit::Driver
+include RFormSpec::Driver
 
-RFormUnit::Process.run("C:\\WINDOWS\\NOTEPAD.EXE")
-notepad_win = RFormUnit::Window.new('Untitled - Notepad')
-RFormUnit::Keyboard.type("Hello, Missing No. 5.{ENTER}1 2 3 4 6 7 8 9 10{ENTER}")
-RFormUnit::Keyboard.press("+{UP 2}")
+RFormSpec::Process.run("C:\\WINDOWS\\NOTEPAD.EXE")
+notepad_win = RFormSpec::Window.new('Untitled - Notepad')
+RFormSpec::Keyboard.type("Hello, Missing No. 5.{ENTER}1 2 3 4 6 7 8 9 10{ENTER}")
+RFormSpec::Keyboard.press("+{UP 2}")
 
 # move cursor up and insert the missing number
-RFormUnit::Mouse.move_to(70, 65)
-RFormUnit::Mouse.click
-RFormUnit::Keyboard.type("5 ")
+RFormSpec::Mouse.move_to(70, 65)
+RFormSpec::Mouse.click
+RFormSpec::Keyboard.type("5 ")
 
 notepad_win.close
 
-notepad_confirm_dialog = RFormUnit::Window.new('Notepad', 'The text')
+notepad_confirm_dialog = RFormSpec::Window.new('Notepad', 'The text')
 notepad_confirm_dialog.focus
-RFormUnit::Button.new(notepad_confirm_dialog, "7").click
+RFormSpec::Button.new(notepad_confirm_dialog, "7").click

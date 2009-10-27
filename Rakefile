@@ -1,12 +1,10 @@
 require 'rubygems'
 require 'rake/testtask'
 require 'rake/rdoctask'
-
-Gem::manage_gems
 require 'rake/gempackagetask'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
-require 'rformunit'
+require 'rformspec'
 
 desc "Default task"
 task :default => [ :clean, :test , :gem]
@@ -26,29 +24,29 @@ Rake::TestTask.new("test") { |t|
 # Generate the RDoc documentation
 Rake::RDocTask.new { |rdoc|
   rdoc.rdoc_dir = 'docs/rdoc'
-  rdoc.title = 'rformunit'
+  rdoc.title = 'rformspec'
   rdoc.template = "#{ENV['template']}.rb" if ENV['template']
   rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/rformunit.rb')
-  rdoc.rdoc_files.include('lib/rformunit/*.rb')
+  rdoc.rdoc_files.include('lib/rformspec.rb')
+  rdoc.rdoc_files.include('lib/rformspec/*.rb')
 }
 
 spec = Gem::Specification.new do |s|
   s.platform= Gem::Platform::CURRENT
-  s.name = "rformunit"
-  s.version = "0.2.1"
+  s.name = "rformspec"
+  s.version = "0.3"
   s.summary = "An wrap of AUTOIT3 for functional testing of Windows form applications"
   # s.description = ""
 
   s.author  = "Zhimin Zhan"
   s.email   = "zhimin@zhimin.com"
-  s.homepage= "http://www.zhimin.com/software/rformunit/"
+  s.homepage= "http://www.zhimin.com/software/rformspec/"
   #  s.rubyforge_project = ""
 
   s.has_rdoc    = true
   s.requirements << 'none'
   s.require_path    = "lib"
-  s.autorequire     = "rformunit"
+  s.autorequire     = "rformspec"
 
   s.files = [ "Rakefile", "README", "CHANGELOG", "MIT-LICENSE" ]
   #  s.files = s.files + Dir.glob( "bin/**/*" ).delete_if { |item| item.include?( "\.svn" ) }
