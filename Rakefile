@@ -34,13 +34,13 @@ Rake::RDocTask.new { |rdoc|
 spec = Gem::Specification.new do |s|
   s.platform= Gem::Platform::CURRENT
   s.name = "rformspec"
-  s.version = "0.3"
+  s.version = "0.3.1"
   s.summary = "An wrap of AUTOIT3 for functional testing of Windows form applications"
   # s.description = ""
 
   s.author  = "Zhimin Zhan"
-  s.email   = "zhimin@zhimin.com"
-  s.homepage= "http://www.zhimin.com/software/rformspec/"
+  s.email   = "zhimin@agileway.com.au"
+  s.homepage= "http://github.com/zhimin/rformspec"
   #  s.rubyforge_project = ""
 
   s.has_rdoc    = true
