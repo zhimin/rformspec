@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+0.3.2
+
+Add option in Window class to wait to focus window (default)
 
 0.3.1 (2010-08)
 =====
