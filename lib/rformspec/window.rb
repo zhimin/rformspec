@@ -7,7 +7,7 @@ module RFormSpec
   class Window  < BaseControl
     attr_accessor :title, :text
 
-    def initialize(title, text = '', timeout = 10)
+    def initialize(title, text = '', timeout = 10, options = {:wait => true})
       # for some windows, the title might change depends when it is invoked
       if title.class == Array
         title.each { |a_title|
@@ -21,7 +21,11 @@ module RFormSpec
 
       @title = title
       @text = text if text
-      result = driver.WinActivate(@title, @text)
+      if options[:wait] then
+        result = driver.WinWaitActive(@title, @text, timeout)
+      else
+        result = driver.WinActivate(@title, @text)
+      end
       raise "timeout while waiting for window: #{self.to_s}" if result == 0
     end
 
