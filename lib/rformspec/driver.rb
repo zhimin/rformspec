@@ -3,16 +3,11 @@ require 'win32ole'
 module RFormSpec
   module Driver
 
-    def init
-      driver
-    end
-
-    def driver
-      return $a3 if $a3
-
+    def self.init_autoit
       $a3 = WIN32OLE.new('AutoItX3.Control')
 
       $a3.AutoItSetOption("WinSearchChildren", 1); # Search Children window as well
+      $a3.AutoItSetOption("WinTitleMatchMode", 2); 
 
       $a3.AutoItSetOption("CaretCoordMode", 0);
       $a3.AutoItSetOption("ColorMode", 1);
@@ -20,10 +15,15 @@ module RFormSpec
       $a3.AutoItSetOption("PixelCoordMode", 0);
       $a3.AutoItSetOption("SendKeyDelay", 15)
       return $a3
+   end
+
+    def driver
+      return $a3 if $a3
+       self.init_autoit
     end
 
     def self.set_autoit_option(key, value)
-      init if $a3.nil?
+      self.init_autoit if $a3.nil?
       $a3.AutoItSetOption(key, value)
     end
 
@@ -34,6 +34,7 @@ module RFormSpec
 
     def wait_and_focus_window(title, text="",  timeout=30)
       driver.WinWaitActive(title, text, timeout * 1000)
+      driver.WinActivate(title, text)
     end
 
     def window_exists?(title)
@@ -67,6 +68,15 @@ module RFormSpec
     end
     alias press_key key_press
 
+    # Wrapper of mouse operation
+    def mouse_move(x, y)
+      RFormSpec::Mouse.move_to(x, y)
+    end
+
+    def mouse_click(x, y)
+      RFormSpec::Mouse.click(x, y)
+    end
+
     # standard open file dialog
     def open_file_dialog(title, filepath)
       wait_and_focus_window(title)
@@ -77,6 +87,5 @@ module RFormSpec
     end
 
     #TODO: save as file dialog
-
   end
 end

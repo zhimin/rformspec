@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + "/control"
 
 module RFormSpec
 
-
   class Window  < BaseControl
     attr_accessor :title, :text
 
