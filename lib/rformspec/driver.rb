@@ -8,21 +8,23 @@ module RFormSpec
     end
 
     def driver
-      return @a3 if @a3
+      return $a3 if $a3
 
-      @a3 = WIN32OLE.new('AutoItX3.Control')
+      $a3 = WIN32OLE.new('AutoItX3.Control')
 
-      @a3.AutoItSetOption("CaretCoordMode", 0);
-      @a3.AutoItSetOption("ColorMode", 1);
-      @a3.AutoItSetOption("MouseCoordMode", 0);
-      @a3.AutoItSetOption("PixelCoordMode", 0);
-      @a3.AutoItSetOption("SendKeyDelay", 15)
-      return @a3
+      $a3.AutoItSetOption("WinSearchChildren", 1); # Search Children window as well
+
+      $a3.AutoItSetOption("CaretCoordMode", 0);
+      $a3.AutoItSetOption("ColorMode", 1);
+      $a3.AutoItSetOption("MouseCoordMode", 0);
+      $a3.AutoItSetOption("PixelCoordMode", 0);
+      $a3.AutoItSetOption("SendKeyDelay", 15)
+      return $a3
     end
 
-    def set_autoit_option(key, value)
-      init if @a3.nil?
-      @a3.AutoItSetOption(key, value)
+    def self.set_autoit_option(key, value)
+      init if $a3.nil?
+      $a3.AutoItSetOption(key, value)
     end
 
     def wait_for_window(win, timeout=30)
