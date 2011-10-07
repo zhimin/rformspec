@@ -34,7 +34,7 @@ Rake::RDocTask.new { |rdoc|
 spec = Gem::Specification.new do |s|
   s.platform= Gem::Platform::CURRENT
   s.name = "rformspec"
-  s.version = "0.3.3"
+  s.version = "0.4"
   s.summary = "An wrap of AUTOIT3 for functional testing of Windows form applications"
   # s.description = ""
 

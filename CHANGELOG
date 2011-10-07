@@ -1,5 +1,12 @@
 CHANGELOG
 =========
+
+0.4 (2011-10)
+- Change Window class: not wait for active by default
+- using global variable reference to AutoIt3 OLE
+- New AutoIt class
+- Examples update
+
 0.3.2
 
 Add option in Window class to wait to focus window (default)

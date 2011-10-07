@@ -3,7 +3,7 @@ require 'rformspec'
 include RFormSpec::Driver
 
 RFormSpec::Process.run("C:\\WINDOWS\\NOTEPAD.EXE")
-notepad_win = RFormSpec::Window.new('Untitled - Notepad')
+notepad_win = RFormSpec::Window.new('Untitled - Notepad', "", :wait_timeout => 2)
 RFormSpec::Keyboard.type("Hello, Missing No. 5.{ENTER}1 2 3 4 6 7 8 9 10{ENTER}")
 RFormSpec::Keyboard.press("+{UP 2}")
 
