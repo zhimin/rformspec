@@ -93,7 +93,6 @@ module RFormSpec
     end
 
     def select_option(option)
-      puts "XXX => #{@parent_win.title}|#{@parent_win.text}|#{@control_id}|#{option}|"
       driver.ControlCommand(@parent_win.title, @parent_win.text, @control_id, "SelectString", option)
     end
 

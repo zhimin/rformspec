@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.4.1 (2012-6)
+
+- add get_class() to find class by name, useful for identify control + instance
+
 0.4 (2011-10)
 - Change Window class: not wait for active by default
 - using global variable reference to AutoIt3 OLE
