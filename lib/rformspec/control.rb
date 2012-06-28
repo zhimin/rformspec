@@ -93,9 +93,18 @@ module RFormSpec
     end
 
     def select_option(option)
-      driver.ControlCommand(@parent_win.title, @parent_win.text, @control_id, "SelectString" , option)
+      puts "XXX => #{@parent_win.title}|#{@parent_win.text}|#{@control_id}|#{option}|"
+      driver.ControlCommand(@parent_win.title, @parent_win.text, @control_id, "SelectString", option)
     end
 
+    def find_option(option)
+      driver.ControlCommand(@parent_win.title, @parent_win.text, @control_id, "FindString", option)
+    end
+    
+    def set_selection(ref)
+      driver.ControlCommand(@parent_win.title, @parent_win.text, @control_id, "SetCurrentSelection", ref)
+    end
+    
   end
 
 

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + "/control"
 module RFormSpec
 
   class Window  < BaseControl
-    attr_accessor :title, :text
+    attr_accessor :title, :text, :class_list
     
     ##
     # title : page title, depends autoit options, might use as substring match or exact match
@@ -26,9 +26,12 @@ module RFormSpec
         }
         raise "timeout while waiting for window: #{self.to_s}"
       end
-
+      
       @title = title
+      puts "[DEBUG ] setting title => #{@title}"
       @text = text if text
+      # useful when ID changes
+      
       timeout = options[:wait_timeout]
       if options[:present]
         result = driver.WinActivate(@title, @text)
@@ -37,6 +40,7 @@ module RFormSpec
         result = driver.WinWaitActive(@title, @text, timeout)
         raise "timeout while waiting for window: #{self.to_s}" if result == 0
       end
+      
     end
 
     def focus
@@ -53,6 +57,10 @@ module RFormSpec
 
     def get_text
       driver.WinGetText(@title, @text)
+    end
+
+    def get_class_list
+      driver.WinGetClassList(@title, @text)
     end
 
     def set_control_text(control_id, new_text)
@@ -99,7 +107,6 @@ module RFormSpec
     alias get_pixel_colour pixel_color
     alias get_pixel_color pixel_color
 
-
     def to_s
       "Window{title => '#{@title}', text=>'#{@text}'}"
     end
@@ -108,6 +115,14 @@ module RFormSpec
     def button(button_id)
       RFormSpec::Button.new(self, button_id)
     end
+
+
+    # return the class match by name
+    def get_class(name)
+      @class_list = get_class_list
+      @class_list.select {|x| x.include?(name)}.collect{|y| y.strip}
+    end
+  
 
   end
 
