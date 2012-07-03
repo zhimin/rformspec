@@ -20,14 +20,12 @@ module RFormSpec
     def wait_and_focus_window(title, text="",  timeout=5)      
       try_for(timeout) { 
         found_window =  driver.WinExists(title, text) 
-        puts "[DEBUG] found window => |#{found_window}|"
         raise "Window '#{title}' not found" unless found_window.to_i == 1
       }
       driver.WinActivate(title, text)
       sleep 0.5
       # check whether suceed
       puts "[DEBUG] => |#{driver.WinActive(title, text)}|"
-      if driver.WinActive(title, text).to_i != 1
         raise "Failed to make window '#{title}' active"
       end
       

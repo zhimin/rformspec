@@ -28,7 +28,7 @@ module RFormSpec
       end
       
       @title = title
-      puts "[DEBUG ] setting title => #{@title}"
+      # puts "[DEBUG ] setting title => #{@title}"
       @text = text if text
       # useful when ID changes
       
