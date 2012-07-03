@@ -1,21 +1,36 @@
 require 'win32ole'
 
+require File.join(File.dirname(__FILE__), "testwise_plugin.rb")
+
 module RFormSpec
   module Driver
 
+    include TestWisePlugin
+    
     def driver
+      dump_caller_stack
       return $a3 if $a3
       return RFormSpec::AutoIt.init
     end
 
     def wait_for_window(win, timeout=30)
       driver.WinWait(win.title, win.text, timeout * 1000)
-      win
     end
 
-    def wait_and_focus_window(title, text="",  timeout=30)
-      driver.WinWaitActive(title, text, timeout * 1000)
+    def wait_and_focus_window(title, text="",  timeout=5)      
+      try_for(timeout) { 
+        found_window =  driver.WinExists(title, text) 
+        puts "[DEBUG] found window => |#{found_window}|"
+        raise "Window '#{title}' not found" unless found_window.to_i == 1
+      }
       driver.WinActivate(title, text)
+      sleep 0.5
+      # check whether suceed
+      puts "[DEBUG] => |#{driver.WinActive(title, text)}|"
+      if driver.WinActive(title, text).to_i != 1
+        raise "Failed to make window '#{title}' active"
+      end
+      
     end
 
     def window_exists?(title)
@@ -32,6 +47,8 @@ module RFormSpec
 
     # wrapper of keyboard operations
     def key_press(keys)
+      dump_caller_stack
+      
       if keys =~ /^Ctrl\+([A-Z])$/
         filtered_keys = "^+#{$1}"
       elsif keys =~ /^Ctrl\+Shift\+([A-Z])$/
@@ -68,5 +85,34 @@ module RFormSpec
     end
 
     #TODO: save as file dialog
+    
+    
+    
+    # helper 
+    # Try the operation up to specified timeout (in seconds), and sleep given interval (in seconds).
+    # Error will be ignored until timeout
+    # Example
+    #    try_for { click_link('waiting')}
+    #    try_for (10, 2) { click_button('Search' } # try to click the 'Search' button upto 10 seconds, try every 2 seconds
+    #    try_for { click_button('Search' }
+    def try_for(timeout = 30, polling_interval = 1, &block)
+      start_time = Time.now
+
+      last_error = nil
+      until (duration = Time.now - start_time) > timeout
+        begin
+          yield
+          last_error = nil
+					return true 
+        rescue => e
+          last_error = e
+        end
+        sleep polling_interval
+      end
+
+      raise "Timeout after #{duration.to_i} seconds with error: #{last_error}." if last_error
+      raise "Timeout after #{duration.to_i} seconds."
+    end
+    
   end
 end

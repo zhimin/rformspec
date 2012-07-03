@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + "/driver"
-
 module RFormSpec
   class BaseControl
     include Driver

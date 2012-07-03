@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+0.5 (2012-7)
+- TestWise IDE support
+- add RWebSpec utils methods such as try_until
+- wait_and focus_window is optmized
 
 0.4.1 (2012-6)
 
