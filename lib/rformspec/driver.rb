@@ -25,7 +25,7 @@ module RFormSpec
       driver.WinActivate(title, text)
       sleep 0.5
       # check whether suceed
-      puts "[DEBUG] => |#{driver.WinActive(title, text)}|"
+      if driver.WinActive(title, text).to_i != 1
         raise "Failed to make window '#{title}' active"
       end
       
