@@ -35,8 +35,12 @@ module RFormSpec
       driver.WinExists(title)  >  0
     end
 
-    def focus_window(title)
-      driver.WinActivate(title)
+    def focus_window(title, text = nil)
+      if text
+        driver.WinActivate(title, text)
+      else
+        driver.WinActivate(title)
+      end
     end
 
     def close_window(title)
