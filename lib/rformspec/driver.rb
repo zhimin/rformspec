@@ -78,9 +78,9 @@ module RFormSpec
     end
 
     # standard open file dialog
-    def open_file_dialog(title, filepath)
+    def open_file_dialog(title, filepath, text="")
       wait_and_focus_window(title)
-      dialog = RFormSpec::OpenFileDialog.new(title)
+      dialog = RFormSpec::OpenFileDialog.new(title, text)
       dialog.enter_filepath(filepath)
       sleep 1
       dialog.click_open

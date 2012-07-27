@@ -1,8 +1,8 @@
 module RFormSpec
   class OpenFileDialog < RFormSpec::Window
 
-    def initialize(title = "Open File")
-      focus_window(title)
+    def initialize(title = "Open File", text = "")
+      focus_window(title, text)
     end
 
     def enter_filepath(file_path)
