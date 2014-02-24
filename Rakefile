@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rake/gempackagetask'
+require 'rdoc/task'
+require 'rubygems/package_task'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
 require 'rformspec'
@@ -21,6 +21,7 @@ Rake::TestTask.new("test") { |t|
   t.verbose= true
 }
 
+
 # Generate the RDoc documentation
 Rake::RDocTask.new { |rdoc|
   rdoc.rdoc_dir = 'docs/rdoc'
@@ -34,7 +35,7 @@ Rake::RDocTask.new { |rdoc|
 spec = Gem::Specification.new do |s|
   s.platform= Gem::Platform::CURRENT
   s.name = "rformspec"
-  s.version = "0.5.1"
+  s.version = "0.5.2"
   s.summary = "An wrap of AUTOIT3 for functional testing of Windows form applications"
   # s.description = ""
 
@@ -58,6 +59,6 @@ spec = Gem::Specification.new do |s|
 
 end
 
-Rake::GemPackageTask.new(spec) do |pkg|
+Gem::PackageTask.new(spec) do |pkg|
   pkg.need_zip = true
 end
