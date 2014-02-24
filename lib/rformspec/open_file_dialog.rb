@@ -10,8 +10,9 @@ module RFormSpec
       set_control_text("Edit1", file_path)
     end
 
-    def click_open
-      click_button("Button2")
+    def click_open      
+      click_button("Button1") # Windows 7 
+      # click_button("Button2")
     end
 
   end
